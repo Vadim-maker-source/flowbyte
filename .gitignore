@@ -1,0 +1,9 @@
+.env
+backend/.env
+backend/.venv/
+backend/*.db
+mobile/.dart_tool/
+mobile/build/
+mobile/.flutter-plugins-dependencies
+__pycache__/
+.pytest_cache/

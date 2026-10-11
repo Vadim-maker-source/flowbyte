@@ -1,0 +1,44 @@
+CREATE TABLE IF NOT EXISTS installations (
+  id UUID PRIMARY KEY,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS modules (
+  id VARCHAR(64) PRIMARY KEY,
+  title VARCHAR(160) NOT NULL,
+  description VARCHAR(500) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS lessons (
+  id VARCHAR(64) PRIMARY KEY,
+  module_id VARCHAR(64) NOT NULL REFERENCES modules(id) ON DELETE CASCADE,
+  order_index INTEGER NOT NULL,
+  title VARCHAR(160) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS exercises (
+  id VARCHAR(64) PRIMARY KEY,
+  lesson_id VARCHAR(64) NOT NULL,
+  type VARCHAR(40) NOT NULL,
+  payload JSONB NOT NULL,
+  xp_reward INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS progress (
+  id BIGSERIAL PRIMARY KEY,
+  installation_id UUID NOT NULL REFERENCES installations(id) ON DELETE CASCADE,
+  lesson_id VARCHAR(64) NOT NULL,
+  status VARCHAR(24) NOT NULL,
+  score INTEGER NOT NULL DEFAULT 0,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  CONSTRAINT uq_progress_installation_lesson UNIQUE (installation_id, lesson_id)
+);
+
+CREATE TABLE IF NOT EXISTS attempts (
+  id BIGSERIAL PRIMARY KEY,
+  installation_id UUID NOT NULL REFERENCES installations(id) ON DELETE CASCADE,
+  exercise_id VARCHAR(64) NOT NULL,
+  correct BOOLEAN NOT NULL,
+  hints_used INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);

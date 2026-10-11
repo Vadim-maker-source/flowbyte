@@ -1,0 +1,1026 @@
+{
+  "id": "flow-control",
+  "title": "Python: управление потоком",
+  "description": "Два модуля: научи Python принимать решения с условиями и повторять действия с циклами.",
+  "modules": [
+    {
+      "id": "conditions",
+      "order": 1,
+      "title": "Python: условный оператор",
+      "description": "if, сравнения, else, elif и логические операторы — от первого вопроса до системы доступа.",
+      "certificateTitle": "Python: условия и логика",
+      "lessonIds": ["lesson-1", "lesson-2", "lesson-3", "lesson-4"]
+    },
+    {
+      "id": "loops",
+      "order": 2,
+      "title": "Python: циклы",
+      "description": "for, range, while, break и continue — повторяем действия без копирования кода.",
+      "certificateTitle": "Python: циклы и повторения",
+      "lessonIds": ["lesson-5", "lesson-6", "lesson-7", "lesson-8"]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "lesson-1",
+      "order": 1,
+      "moduleId": "conditions",
+      "moduleLessonOrder": 1,
+      "title": "Если что-то произошло",
+      "eyebrow": "Первое решение",
+      "location": "Палуба 01 · Аварийный шлюз",
+      "missionBrief": "После удара метеорита шлюз A-7 завис. Научи Byte проверять сигналы датчиков и безопасно провести ремонтного дрона внутрь.",
+      "whyItMatters": "Без if программа делает одно и то же при любых обстоятельствах. Условие позволяет ей смотреть на данные и выбирать подходящее действие.",
+      "whereUsed": ["вход по паролю", "здоровье персонажа", "датчики робота"],
+      "practiceGoal": "Научиться находить условие, вычислять True или False и предсказывать следующую строку Python.",
+      "ruleOfThumb": "Читай if как фразу: «если вопрос истинный — выполни блок с отступом».",
+      "deepDive": [
+        "После if всегда стоит выражение, результат которого можно свести к True или False.",
+        "Двоеточие открывает блок, а одинаковый отступ показывает, какие строки входят в него.",
+        "Если условие ложно и ветки else нет, Python просто продолжает выполнение после блока."
+      ],
+      "selfCheckQuestion": "door_open = False. Выполнится ли строка move() под if door_open?",
+      "selfCheckAnswer": "Нет. Значение False делает условие ложным, поэтому вложенная строка пропускается.",
+      "concept": "Условие — это вопрос, на который программа отвечает только «да» или «нет». Ответ определяет, какое действие будет следующим.",
+      "analogy": "Представь автоматическую дверь. Она как будто спрашивает: «Передо мной есть человек?». Если да — открывается. Если нет — остаётся закрытой. if — это такой же вопрос внутри программы.",
+      "steps": [
+        "Программа получает текущее значение: например, дверь открыта или закрыта.",
+        "Проверяет вопрос после if и получает True или False.",
+        "При True выполняет вложенную команду, при False пропускает её."
+      ],
+      "commonMistake": "if не угадывает намерение. Он буквально проверяет записанный вопрос. Если перепутать True и False, Byte честно выполнит неверный маршрут.",
+      "explanation": "Если door_open равно True, Byte выполняет move(). Если False — строка move() пропускается.",
+      "code": ["door_open = True", "if door_open:", "    move()"],
+      "exercises": [
+        {
+          "id": "prediction-door",
+          "lessonId": "lesson-1",
+          "order": 1,
+          "title": "Открытая дверь",
+          "type": "prediction",
+          "missionBrief": "Ремонтный дрон застрял снаружи. Датчик говорит, что створки уже открыты — спрогнозируй следующий шаг Byte.",
+          "systemLabel": "Шлюз A-7",
+          "successMessage": "Byte прошёл створки, не задев аварийный затвор.",
+          "prompt": "Дверь открыта. Какую команду выполнит программа?",
+          "code": ["door_open = True", "if door_open:", "    move()", "else:", "    wait()"],
+          "options": ["Пойдёт вперёд", "Останется на месте", "Начнёт заряжаться"],
+          "correctAnswer": ["Пойдёт вперёд"],
+          "hints": ["Найди значение door_open.", "True означает, что вопрос после if получил ответ «да».", "При True выполняется строка сразу под if."],
+          "explanation": "door_open равно True, поэтому выполняется move().",
+          "xpReward": 20,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "door_open → True", "position": 0},
+            {"action": "move", "activeLine": 3, "label": "выполняется move()", "position": 1}
+          ]
+        },
+        {
+          "id": "prediction-low-energy",
+          "lessonId": "lesson-1",
+          "order": 2,
+          "title": "Мало энергии",
+          "type": "prediction",
+          "missionBrief": "В тёмном коридоре до пульта ещё 30 метров, а заряд почти кончился. Реши, рискнёт ли Byte ехать дальше.",
+          "systemLabel": "Аварийный док",
+          "successMessage": "Byte выбрал зарядку и не отключился посреди шлюза.",
+          "prompt": "У Byte 8% энергии. Что произойдёт после проверки?",
+          "code": ["energy = 8", "if energy >= 20:", "    move()", "else:", "    charge()"],
+          "options": ["Начнёт заряжаться", "Пойдёт вперёд", "Завершит программу"],
+          "correctAnswer": ["Начнёт заряжаться"],
+          "hints": ["Сравни число 8 с числом 20.", "8 >= 20 даёт False.", "При False программа переходит в else."],
+          "explanation": "8 не больше и не равно 20, поэтому условие ложно и выполняется charge().",
+          "xpReward": 20,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "8 >= 20 → False", "position": 0},
+            {"action": "checkCondition", "activeLine": 4, "label": "условие False: переход к else", "position": 0},
+            {"action": "charge", "activeLine": 5, "label": "выполняется charge()", "position": 0}
+          ]
+        },
+        {
+          "id": "fix-rain-condition",
+          "lessonId": "lesson-1",
+          "order": 3,
+          "title": "Утечка кислорода",
+          "type": "bugHunt",
+          "missionBrief": "Датчик видит утечку, но аварийный скрипт пропускает герметизацию. Найди одну строку, которая переворачивает решение.",
+          "systemLabel": "Контур герметизации",
+          "successMessage": "Клапан перекрыт. Потеря кислорода остановлена.",
+          "prompt": "Нажми на строку, из-за которой seal_leak() не запускается.",
+          "code": ["oxygen_low = True", "if not oxygen_low:", "    seal_leak()", "else:", "    continue_route()"],
+          "resolvedCode": ["oxygen_low = True", "if oxygen_low:", "    seal_leak()", "else:", "    continue_route()"],
+          "options": [],
+          "correctAnswer": ["2"],
+          "hints": ["Значение oxygen_low уже равно True.", "Нужна ветка, которая сработает при True.", "not на второй строке переворачивает сигнал датчика."],
+          "explanation": "Ошибка в строке 2: not превращает True в False. Для утечки нужно условие if oxygen_low.",
+          "xpReward": 20,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "oxygen_low → True", "position": 0},
+            {"action": "sealLeak", "activeLine": 3, "label": "выполняется seal_leak()", "position": 0}
+          ]
+        },
+        {
+          "id": "reorder-first-if",
+          "lessonId": "lesson-1",
+          "order": 4,
+          "title": "Собери первую проверку",
+          "type": "reorder",
+          "missionBrief": "Резервная батарея разряжается. Собери короткую проверку, которая включает зарядку только при низком уровне энергии.",
+          "systemLabel": "Батарея дрона",
+          "successMessage": "Проверка собрана. Зарядка включается только по сигналу датчика.",
+          "prompt": "Расположи строки в правильном порядке.",
+          "code": ["energy = 12", "if energy < 20:", "    charge()"],
+          "options": ["charge()", "energy = 12", "if energy < 20:"],
+          "correctAnswer": ["energy = 12", "if energy < 20:", "charge()"],
+          "hints": ["Сначала переменная получает значение.", "Затем if задаёт вопрос о значении energy.", "Команда charge() находится внутри if и выполняется последней."],
+          "explanation": "Сначала задаётся energy, затем проверяется условие, после чего вложенная команда запускает зарядку.",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "12 < 20 → True", "position": 0},
+            {"action": "charge", "activeLine": 3, "label": "выполняется charge()", "position": 0}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson-2",
+      "order": 2,
+      "moduleId": "conditions",
+      "moduleLessonOrder": 2,
+      "title": "Два пути",
+      "eyebrow": "if / else",
+      "location": "Палуба 02 · Жизнеобеспечение",
+      "missionBrief": "Станция теряет тепло и питание. Настрой развилки так, чтобы автоматика выбирала ровно одну безопасную реакцию на каждый сигнал.",
+      "whyItMatters": "if/else нужен, когда у программы есть два взаимоисключающих сценария: пропустить или отказать, зарядить или продолжить, включить или выключить.",
+      "whereUsed": ["проверка доступа", "настройки игры", "аварийная автоматика"],
+      "practiceGoal": "Понять, почему выполняется только одна ветка, и находить ошибочный знак сравнения.",
+      "ruleOfThumb": "if отвечает за путь «да», else — за все остальные случаи; за один проход срабатывает только один путь.",
+      "deepDive": [
+        "Python сначала вычисляет условие и только потом выбирает ветку.",
+        "После выполнения блока if программа перепрыгивает через else.",
+        "Оба блока должны иметь одинаковый отступ относительно if и else."
+      ],
+      "selfCheckQuestion": "energy = 20 и условие energy > 20. Какая ветка сработает?",
+      "selfCheckAnswer": "Сработает else: 20 не больше 20. Для включения границы нужен оператор >=.",
+      "concept": "if и else создают развилку. Истинное условие отправляет программу по первому пути, ложное — по второму. За один проход выбирается только одна ветка.",
+      "analogy": "Это как выбор одежды: если на улице холодно — надеваешь куртку, иначе идёшь без неё. Ты не делаешь оба действия одновременно: сначала проверяешь погоду, потом выбираешь один путь.",
+      "steps": [
+        "Вычисли выражение после if: например, 15 > 20.",
+        "Если результат True, выполни блок if и пропусти else.",
+        "Если результат False, пропусти if и выполни блок else."
+      ],
+      "commonMistake": "else не имеет собственного условия. Он означает «во всех остальных случаях» и относится к ближайшему if на том же уровне отступа.",
+      "explanation": "При энергии 15 выражение 15 > 20 ложно. Byte пропускает move() и выбирает charge().",
+      "code": ["energy = 15", "if energy > 20:", "    move()", "else:", "    charge()"],
+      "exercises": [
+        {
+          "id": "fix-energy",
+          "lessonId": "lesson-2",
+          "order": 1,
+          "title": "Исправь порог энергии",
+          "type": "bugHunt",
+          "missionBrief": "Питание скачет. В текущем коде Byte стартует именно тогда, когда заряда недостаточно. Проведи диагностику.",
+          "systemLabel": "Резервная батарея",
+          "successMessage": "Неверный порог найден. Byte остаётся у зарядной станции.",
+          "prompt": "Нажми на строку, где записано опасное условие.",
+          "code": ["energy = 15", "if energy < 20:", "    move()", "else:", "    charge()"],
+          "resolvedCode": ["energy = 15", "if energy > 20:", "    move()", "else:", "    charge()"],
+          "options": [],
+          "correctAnswer": ["2"],
+          "hints": ["Сбой связан с решением, а не с командами move и charge.", "Проверь строку с if.", "Опасный знак < находится на второй строке; его нужно заменить на >."],
+          "explanation": "Ошибка в строке 2: знак < запускает движение при низком заряде. Нужен знак >.",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "15 > 20 → False", "position": 0},
+            {"action": "checkCondition", "activeLine": 4, "label": "условие False: переход к else", "position": 0},
+            {"action": "charge", "activeLine": 5, "label": "выполняется charge()", "position": 0}
+          ]
+        },
+        {
+          "id": "prediction-temperature",
+          "lessonId": "lesson-2",
+          "order": 2,
+          "title": "Холодно или тепло?",
+          "type": "prediction",
+          "missionBrief": "В оранжерее нельзя включать обогрев и вентилятор вместе. Проверь, какой контур выберет автоматика.",
+          "systemLabel": "Климат-контроль",
+          "successMessage": "Температурный контур выбрал одну ветку и стабилизировал воздух.",
+          "prompt": "Температура равна 5. Какая ветка выполнится?",
+          "code": ["temperature = 5", "if temperature < 0:", "    heater_on()", "else:", "    fan_on()"],
+          "options": ["Включится вентилятор", "Включится обогреватель", "Обе команды"],
+          "correctAnswer": ["Включится вентилятор"],
+          "hints": ["Проверь: 5 меньше нуля?", "5 < 0 даёт False.", "При False выполняется ветка else."],
+          "explanation": "5 < 0 — False. Блок if пропускается, и выполняется fan_on().",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "5 < 0 → False", "position": 0},
+            {"action": "checkCondition", "activeLine": 4, "label": "выбрана ветка else", "position": 0},
+            {"action": "fanOn", "activeLine": 5, "label": "выполняется fan_on()", "position": 0}
+          ]
+        },
+        {
+          "id": "prediction-access",
+          "lessonId": "lesson-2",
+          "order": 3,
+          "title": "Ключ от шлюза",
+          "type": "prediction",
+          "missionBrief": "За дверью серверная, но пропуск Byte не подтверждён. Предскажи безопасное поведение охранного скрипта.",
+          "systemLabel": "Контроль доступа",
+          "successMessage": "Доступ корректно заблокирован до получения ключа.",
+          "prompt": "У Byte нет ключа. Что сделает программа?",
+          "code": ["has_key = False", "if has_key:", "    open_gate()", "else:", "    wait()"],
+          "options": ["Останется ждать", "Откроет шлюз", "Пойдёт сквозь стену"],
+          "correctAnswer": ["Останется ждать"],
+          "hints": ["Посмотри на has_key.", "has_key равно False.", "При False программа выбирает else."],
+          "explanation": "Ключа нет, поэтому условие ложно и Byte выполняет wait().",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "has_key → False", "position": 0},
+            {"action": "checkCondition", "activeLine": 4, "label": "выбрана ветка else", "position": 0},
+            {"action": "wait", "activeLine": 5, "label": "выполняется wait()", "position": 0}
+          ]
+        },
+        {
+          "id": "prediction-energy-boundary",
+          "lessonId": "lesson-2",
+          "order": 4,
+          "title": "Ровно на границе",
+          "type": "prediction",
+          "missionBrief": "Для старта нужно не меньше 20% энергии. У Byte ровно 20% — проверь, учитывает ли автоматика граничное значение.",
+          "systemLabel": "Стартовый контур",
+          "successMessage": "Граница учтена. Byte может безопасно продолжить маршрут.",
+          "prompt": "Какая ветка выполнится при energy = 20?",
+          "code": ["energy = 20", "if energy >= 20:", "    move()", "else:", "    charge()"],
+          "options": ["Выполнится move()", "Выполнится charge()", "Выполнятся обе команды"],
+          "correctAnswer": ["Выполнится move()"],
+          "hints": [">= читается «больше или равно».", "Число 20 равно границе 20.", "Истинная проверка выбирает блок if."],
+          "explanation": "20 >= 20 даёт True, поэтому выполняется move(), а ветка else пропускается.",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "20 >= 20 → True", "position": 0},
+            {"action": "move", "activeLine": 3, "label": "выполняется move()", "position": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson-3",
+      "order": 3,
+      "moduleId": "conditions",
+      "moduleLessonOrder": 3,
+      "title": "Сравниваем значения",
+      "eyebrow": "Операторы сравнения",
+      "location": "Палуба 03 · Диагностика",
+      "missionBrief": "Датчики присылают числа и состояния. Научи Byte сравнивать их точно: выше, ниже, равно или не равно.",
+      "whyItMatters": "Условию нужен вопрос, на который можно ответить True или False. Операторы сравнения превращают температуру, очки, пароль или статус двери в такой ответ.",
+      "whereUsed": ["проходной балл", "лимит скорости", "проверка пароля"],
+      "practiceGoal": "Выбирать правильный оператор и не путать присваивание = со сравнением ==.",
+      "ruleOfThumb": "Сначала назови сравнение словами, затем подставь значения и только после этого выбирай ветку.",
+      "deepDive": [
+        "> и < не включают границу, а >= и <= включают её.",
+        "== проверяет равенство, != проверяет, что значения различаются.",
+        "Сравнение не меняет переменные — оно создаёт логический результат True или False."
+      ],
+      "selfCheckQuestion": "Что вернёт выражение 10 != 10?",
+      "selfCheckAnswer": "False, потому что значения одинаковые, а оператор != спрашивает, различаются ли они.",
+      "concept": "Python сравнивает значения операторами >, <, >=, <=, == и !=. Результат любого сравнения — bool: True или False.",
+      "analogy": "На турникете тоже есть правило: если рост не меньше 140 см — проход открыт. Сначала измерение, затем сравнение, затем решение.",
+      "steps": [
+        "Найди левое и правое значение.",
+        "Прочитай знак словами: больше, меньше, равно или не равно.",
+        "Получив True или False, выбери ветку if или else."
+      ],
+      "commonMistake": "Один знак = записывает значение в переменную. Два знака == задают вопрос «равно ли?». В условии почти всегда нужен ==.",
+      "explanation": "Сравнение не изменяет значения. Оно только отвечает True или False.",
+      "code": ["score = 72", "if score >= 60:", "    grant_access()", "else:", "    retry()"],
+      "exercises": [
+        {
+          "id": "prediction-score-threshold",
+          "lessonId": "lesson-3",
+          "order": 1,
+          "title": "Проходной балл",
+          "type": "prediction",
+          "missionBrief": "Для запуска реактора нужно набрать минимум 60 баллов диагностики. У Byte 72 — определи результат проверки.",
+          "systemLabel": "Экзамен реактора",
+          "successMessage": "Порог рассчитан верно. Доступ к следующей проверке открыт.",
+          "prompt": "Какую команду выполнит Python?",
+          "code": ["score = 72", "if score >= 60:", "    grant_access()", "else:", "    retry()"],
+          "options": ["grant_access()", "retry()", "обе команды"],
+          "correctAnswer": ["grant_access()"],
+          "hints": [">= означает «больше или равно».", "72 больше 60.", "При True выполняется блок if."],
+          "explanation": "72 >= 60 даёт True, поэтому Python выполняет grant_access().",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "72 >= 60 → True", "position": 0},
+            {"action": "grantAccess", "activeLine": 3, "label": "выполняется grant_access()", "position": 0}
+          ]
+        },
+        {
+          "id": "bug-equality-operator",
+          "lessonId": "lesson-3",
+          "order": 2,
+          "title": "Один знак потерялся",
+          "type": "bugHunt",
+          "missionBrief": "Терминал должен сравнить введённый код с 741, но Python сообщает об ошибке. Найди строку с присваиванием вместо сравнения.",
+          "systemLabel": "Кодовый терминал",
+          "successMessage": "Оператор == восстановлен. Терминал снова умеет сравнивать коды.",
+          "prompt": "Нажми на ошибочную строку.",
+      "code": ["code = 741", "if code = 741:", "    open_terminal()", "else:", "    deny()"],
+      "resolvedCode": ["code = 741", "if code == 741:", "    open_terminal()", "else:", "    deny()"],
+          "options": [],
+          "correctAnswer": ["2"],
+          "hints": ["Первая строка сохраняет число и написана правильно.", "Вторая строка должна задавать вопрос.", "Для сравнения равенства Python использует ==."],
+          "explanation": "Ошибка в строке 2: внутри if нужен оператор ==, а не присваивание =.",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "741 == 741 → True", "position": 0},
+            {"action": "openTerminal", "activeLine": 3, "label": "выполняется open_terminal()", "position": 0}
+          ]
+        },
+        {
+          "id": "prediction-not-equal",
+          "lessonId": "lesson-3",
+          "order": 3,
+          "title": "Створки не открыты",
+          "type": "prediction",
+          "missionBrief": "Статус двери — closed. Защитный скрипт проверяет, отличается ли он от open.",
+          "systemLabel": "Защитный затвор",
+          "successMessage": "Неравенство прочитано верно. Закрытая дверь заблокирована.",
+          "prompt": "Что выполнится после проверки !=?",
+          "code": ["door = 'closed'", "if door != 'open':", "    lock()", "else:", "    pass_through()"],
+          "options": ["lock()", "pass_through()", "ничего"],
+          "correctAnswer": ["lock()"],
+          "hints": ["!= читается «не равно».", "closed и open — разные строки.", "Разные значения дают True."],
+          "explanation": "'closed' != 'open' даёт True, поэтому выполняется lock().",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "closed != open → True", "position": 0},
+            {"action": "lock", "activeLine": 3, "label": "выполняется lock()", "position": 0}
+          ]
+        },
+        {
+          "id": "prediction-temperature-limit",
+          "lessonId": "lesson-3",
+          "order": 4,
+          "title": "Критическая граница",
+          "type": "prediction",
+          "missionBrief": "При температуре −5 °C или ниже нужно включить тревогу. Датчик показывает ровно −5 °C.",
+          "systemLabel": "Термодатчик ядра",
+          "successMessage": "Оператор сравнения прочитан точно. Тревога включена вовремя.",
+          "prompt": "Что вернёт проверка temperature <= -5?",
+          "code": ["temperature = -5", "if temperature <= -5:", "    alarm()", "else:", "    wait()"],
+          "options": ["True и alarm()", "False и wait()", "Ошибка Python"],
+          "correctAnswer": ["True и alarm()"],
+          "hints": ["<= означает «меньше или равно».", "−5 равно правой границе −5.", "Равенство делает условие истинным."],
+          "explanation": "−5 <= −5 — True, потому что оператор <= включает равенство.",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "-5 <= -5 → True", "position": 0},
+            {"action": "alarm", "activeLine": 3, "label": "выполняется alarm()", "position": 0}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson-4",
+      "order": 4,
+      "moduleId": "conditions",
+      "moduleLessonOrder": 4,
+      "title": "Несколько условий",
+      "eyebrow": "elif, and, or, not",
+      "location": "Палуба 04 · Центр решений",
+      "missionBrief": "Один датчик уже недостаточен. Собери логику, которая учитывает заряд, сигнал и разные аварийные уровни.",
+      "whyItMatters": "В реальных программах решения редко зависят от одного факта. and требует выполнения всех правил, or — хотя бы одного, elif проверяет следующий сценарий.",
+      "whereUsed": ["форма входа", "умный дом", "игровой ИИ"],
+      "practiceGoal": "Читать составные условия слева направо и понимать, когда нужен elif вместо нескольких отдельных if.",
+      "ruleOfThumb": "Используй elif, когда нужен один результат из нескольких; and — когда обязательны все проверки, or — когда достаточно одной.",
+      "deepDive": [
+        "Цепочка if/elif/else прекращается на первой истинной ветке.",
+        "and даёт True только тогда, когда истинны обе части условия.",
+        "not меняет True на False и наоборот, поэтому его лучше читать вслух как «не»."
+      ],
+      "selfCheckQuestion": "Есть пропуск, но нет защитного костюма. Выражение has_pass and has_suit истинно?",
+      "selfCheckAnswer": "Нет. Для and обе проверки должны быть истинными одновременно.",
+      "concept": "and объединяет условия и требует True от каждого. or достаточно одного True. not переворачивает результат. elif добавляет ещё один вариант между if и else.",
+      "analogy": "Для полёта нужны и билет, и паспорт — это and. Для тревоги достаточно дыма или высокой температуры — это or. elif похож на следующий пункт инструкции.",
+      "steps": [
+        "Вычисли каждое простое сравнение отдельно.",
+        "Объедини результаты по правилу and, or или not.",
+        "В цепочке if/elif/else выполни первую истинную ветку и остановись."
+      ],
+      "commonMistake": "and и or дают разные ответы. Не читай их одинаково: and требует все условия, or — хотя бы одно.",
+      "explanation": "Составное условие собирается из простых проверок, каждая из которых даёт True или False.",
+      "code": ["energy = 40", "signal = True", "if energy >= 20 and signal:", "    launch()", "else:", "    wait()"],
+      "exercises": [
+        {
+          "id": "prediction-and-launch",
+          "lessonId": "lesson-4",
+          "order": 1,
+          "title": "Два разрешения",
+          "type": "prediction",
+          "missionBrief": "Дрон можно запустить только при достаточном заряде и стабильном сигнале. Обе проверки сейчас истинны.",
+          "systemLabel": "Пусковая платформа",
+          "successMessage": "Оба разрешения подтверждены. Дрон стартовал безопасно.",
+          "prompt": "Что выполнит Python при условии с and?",
+          "code": ["energy = 40", "signal = True", "if energy >= 20 and signal:", "    launch()", "else:", "    wait()"],
+          "options": ["launch()", "wait()", "обе команды"],
+          "correctAnswer": ["launch()"],
+          "hints": ["40 >= 20 даёт True.", "signal тоже равен True.", "True and True даёт True."],
+          "explanation": "Обе части истинны, поэтому всё условие с and равно True и выполняется launch().",
+          "xpReward": 30,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 3, "label": "True and True → True", "position": 0},
+            {"action": "launch", "activeLine": 4, "label": "выполняется launch()", "position": 0}
+          ]
+        },
+        {
+          "id": "prediction-or-alarm",
+          "lessonId": "lesson-4",
+          "order": 2,
+          "title": "Сигнал тревоги",
+          "type": "prediction",
+          "missionBrief": "Дыма нет, но температура критическая. Тревога должна включиться, если опасен хотя бы один датчик.",
+          "systemLabel": "Пожарный контур",
+          "successMessage": "Оператор or сработал по одному датчику. Тревога включена вовремя.",
+          "prompt": "Какой результат даст условие с or?",
+          "code": ["smoke = False", "heat = True", "if smoke or heat:", "    alarm()", "else:", "    stay_calm()"],
+          "options": ["alarm()", "stay_calm()", "ошибка"],
+          "correctAnswer": ["alarm()"],
+          "hints": ["or не требует двух True.", "Одна часть равна True.", "False or True даёт True."],
+          "explanation": "Для or достаточно одного True. heat равно True, поэтому выполняется alarm().",
+          "xpReward": 30,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 3, "label": "False or True → True", "position": 0},
+            {"action": "alarm", "activeLine": 4, "label": "выполняется alarm()", "position": 0}
+          ]
+        },
+        {
+          "id": "reorder-elif-chain",
+          "lessonId": "lesson-4",
+          "order": 3,
+          "title": "Три уровня энергии",
+          "type": "reorder",
+          "missionBrief": "Размести проверки от самого критического уровня к обычному сценарию. Python должен выбрать только одну ветку.",
+          "systemLabel": "Контроллер энергии",
+          "successMessage": "Цепочка if/elif/else собрана. Контроллер выбирает один точный режим.",
+          "prompt": "Расположи части цепочки в правильном порядке.",
+          "code": ["if energy < 10:", "    shutdown()", "elif energy < 30:", "    charge()", "else:", "    move()"],
+          "options": ["else: move()", "elif energy < 30: charge()", "if energy < 10: shutdown()"],
+          "correctAnswer": ["if energy < 10: shutdown()", "elif energy < 30: charge()", "else: move()"],
+          "hints": ["Цепочка всегда начинается с if.", "elif находится между if и else.", "else завершает цепочку и не имеет условия."],
+          "explanation": "Python проверяет if, затем elif и только потом else. После первой истинной ветки остальные пропускаются.",
+          "xpReward": 30,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 1, "label": "первая проверка", "position": 0},
+            {"action": "checkCondition", "activeLine": 3, "label": "следующая проверка elif", "position": 0},
+            {"action": "charge", "activeLine": 4, "label": "выполняется charge()", "position": 0}
+          ]
+        },
+        {
+          "id": "bug-access-and",
+          "lessonId": "lesson-4",
+          "order": 4,
+          "title": "Обе проверки обязательны",
+          "type": "bugHunt",
+          "missionBrief": "Система пропускает сотрудника, если найден либо пропуск, либо защитный костюм. Для реакторного зала обязательны оба условия.",
+          "systemLabel": "Доступ к реактору",
+          "successMessage": "Логика доступа исправлена: теперь требуются и пропуск, и костюм.",
+          "prompt": "Нажми строку, где выбран неправильный логический оператор.",
+          "code": ["has_pass = True", "has_suit = False", "if has_pass or has_suit:", "    grant_access()", "else:", "    lock()"],
+          "resolvedCode": ["has_pass = True", "has_suit = False", "if has_pass and has_suit:", "    grant_access()", "else:", "    lock()"],
+          "options": [],
+          "correctAnswer": ["3"],
+          "hints": ["Доступ возможен только при выполнении двух требований.", "or достаточно одного истинного значения.", "В строке 3 оператор or нужно заменить на and."],
+          "explanation": "Для обязательных двух проверок нужен and. При отсутствии костюма условие станет False и шлюз останется закрытым.",
+          "xpReward": 30,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 3, "label": "True and False → False", "position": 0},
+            {"action": "checkCondition", "activeLine": 5, "label": "выбрана ветка else", "position": 0},
+            {"action": "lock", "activeLine": 6, "label": "выполняется lock()", "position": 0}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson-5",
+      "order": 5,
+      "moduleId": "loops",
+      "moduleLessonOrder": 1,
+      "title": "Повтори это",
+      "eyebrow": "Циклы for",
+      "location": "Палуба 03 · Грузовой сектор",
+      "missionBrief": "Контейнеры перекрыли путь к реактору. Запусти транспортный дрон и научи его выполнять серии команд без копирования одинаковых строк.",
+      "concept": "Цикл повторяет один блок команд заданное число раз. Вместо четырёх одинаковых move() можно один раз написать move() внутри цикла на четыре повтора.",
+      "analogy": "Представь тренировку: тренер говорит «сделай 4 приседания». Он не повторяет команду четыре раза — сообщает действие и количество. Цикл делает с кодом то же самое.",
+      "whyItMatters": "Циклы убирают копирование, уменьшают число ошибок и позволяют одной программе обработать хоть 3, хоть 300 объектов.",
+      "whereUsed": ["уровни в играх", "списки сообщений", "обработка файлов"],
+      "practiceGoal": "Научиться читать for и range(), считать итерации и правильно ставить отступ.",
+      "ruleOfThumb": "for применяй, когда число повторов известно заранее; range(n) создаёт значения от 0 до n − 1.",
+      "deepDive": [
+        "Переменная цикла получает новое значение на каждой итерации.",
+        "range(4) даёт 0, 1, 2, 3 — всего четыре значения.",
+        "Все строки с одинаковым отступом внутри for повторяются на каждой итерации."
+      ],
+      "selfCheckQuestion": "Сколько раз выполнится команда внутри for step in range(5)?",
+      "selfCheckAnswer": "Пять раз: для значений step 0, 1, 2, 3 и 4.",
+      "steps": [
+        "Цикл создаёт счётчик и начинает с первого повтора.",
+        "Выполняет все команды внутри блока сверху вниз.",
+        "Увеличивает счётчик и повторяет блок, пока повторы не закончатся."
+      ],
+      "commonMistake": "Повторяется только код с отступом внутри цикла. Строка без отступа уже находится после цикла и выполнится один раз.",
+      "explanation": "range(4) создаёт четыре итерации: 0, 1, 2 и 3. На каждой итерации Byte делает один шаг.",
+      "code": ["for step in range(4):", "    move()"],
+      "exercises": [
+        {
+          "id": "prediction-three-steps",
+          "lessonId": "lesson-5",
+          "order": 1,
+          "title": "Сколько будет шагов?",
+          "type": "prediction",
+          "missionBrief": "Дрон должен пересечь три платформы и остановиться точно перед разрывом. Просчитай цикл до запуска.",
+          "systemLabel": "Грузовой дрон",
+          "successMessage": "Дрон прошёл три платформы и остановился у края.",
+          "prompt": "Посчитай, сколько раз выполнится move().",
+          "code": ["for step in range(3):", "    move()"],
+          "options": ["3 раза", "2 раза", "4 раза"],
+          "correctAnswer": ["3 раза"],
+          "hints": ["Число внутри range задаёт количество повторов.", "range(3) создаёт три значения: 0, 1, 2.", "move() выполнится один раз на каждое значение."],
+          "explanation": "range(3) запускает тело цикла три раза, поэтому Byte делает три шага.",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "loopStart", "activeLine": 1, "label": "цикл начинается", "iteration": 0, "total": 3, "position": 0},
+            {"action": "move", "activeLine": 2, "label": "итерация 1 / 3 · move()", "iteration": 1, "total": 3, "position": 1},
+            {"action": "move", "activeLine": 2, "label": "итерация 2 / 3 · move()", "iteration": 2, "total": 3, "position": 2},
+            {"action": "move", "activeLine": 2, "label": "итерация 3 / 3 · move()", "iteration": 3, "total": 3, "position": 3}
+          ]
+        },
+        {
+          "id": "reorder-loop",
+          "lessonId": "lesson-5",
+          "order": 2,
+          "title": "Собери цикл",
+          "type": "reorder",
+          "missionBrief": "Манипулятор должен передвинуть четыре одинаковых ящика. Собери короткую программу вместо четырёх копий move().",
+          "systemLabel": "Манипулятор C-4",
+          "successMessage": "Четыре контейнера перемещены одним компактным циклом.",
+          "prompt": "Поставь заголовок цикла перед командой, которую нужно повторить.",
+          "code": ["for step in range(4):", "    move()"],
+          "options": ["move()", "for step in range(4):"],
+          "correctAnswer": ["for step in range(4):", "move()"],
+          "hints": ["Сначала программа должна узнать количество повторов.", "Команда move() находится внутри цикла.", "Поставь строку for перед move()."],
+          "explanation": "Заголовок цикла идёт первым, а move() повторяется внутри него.",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "loopStart", "activeLine": 1, "label": "цикл начинается", "iteration": 0, "total": 4, "position": 0},
+            {"action": "move", "activeLine": 2, "label": "итерация 1 / 4 · move()", "iteration": 1, "total": 4, "position": 1},
+            {"action": "move", "activeLine": 2, "label": "итерация 2 / 4 · move()", "iteration": 2, "total": 4, "position": 2},
+            {"action": "move", "activeLine": 2, "label": "итерация 3 / 4 · move()", "iteration": 3, "total": 4, "position": 3},
+            {"action": "move", "activeLine": 2, "label": "итерация 4 / 4 · move()", "iteration": 4, "total": 4, "position": 4}
+          ]
+        },
+        {
+          "id": "fix-loop-count",
+          "lessonId": "lesson-5",
+          "order": 3,
+          "title": "Нужны четыре шага",
+          "type": "bugHunt",
+          "missionBrief": "Маршрут обрывается на середине моста: в журнале видно только два движения вместо четырёх. Найди неверную строку.",
+          "systemLabel": "Мост к реактору",
+          "successMessage": "Счётчик исправлен. Byte добрался до четвёртой платформы.",
+          "prompt": "Нажми на строку, из-за которой Byte не доходит до конца.",
+      "code": ["for step in range(2):", "    move()"],
+      "resolvedCode": ["for step in range(4):", "    move()"],
+          "options": [],
+          "correctAnswer": ["1"],
+          "hints": ["Количество повторов записано внутри range.", "Неверное число находится в заголовке цикла.", "Нажми строку 1: в ней нужно заменить 2 на 4."],
+          "explanation": "Ошибка в строке 1: range(2) останавливает цикл слишком рано. Нужен range(4).",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "loopStart", "activeLine": 1, "label": "range(4)", "iteration": 0, "total": 4, "position": 0},
+            {"action": "move", "activeLine": 2, "label": "итерация 1 / 4 · move()", "iteration": 1, "total": 4, "position": 1},
+            {"action": "move", "activeLine": 2, "label": "итерация 2 / 4 · move()", "iteration": 2, "total": 4, "position": 2},
+            {"action": "move", "activeLine": 2, "label": "итерация 3 / 4 · move()", "iteration": 3, "total": 4, "position": 3},
+            {"action": "move", "activeLine": 2, "label": "итерация 4 / 4 · move()", "iteration": 4, "total": 4, "position": 4}
+          ]
+        },
+        {
+          "id": "prediction-range-bounds",
+          "lessonId": "lesson-5",
+          "order": 4,
+          "title": "Диапазон с началом",
+          "type": "prediction",
+          "missionBrief": "Сканер должен проверить сектора 2, 3 и 4. Определи, сколько итераций создаёт range(2, 5).",
+          "systemLabel": "Сканер отсеков",
+          "successMessage": "Диапазон рассчитан: проверены три нужных сектора.",
+          "prompt": "Сколько раз выполнится scan(sector)?",
+          "code": ["for sector in range(2, 5):", "    scan(sector)"],
+          "options": ["3 раза", "5 раз", "2 раза"],
+          "correctAnswer": ["3 раза"],
+          "hints": ["Первое число входит в диапазон.", "Последнее число 5 не входит.", "Получаются значения 2, 3 и 4."],
+          "explanation": "range(2, 5) создаёт три значения: 2, 3 и 4. Правая граница не включается.",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "loopStart", "activeLine": 1, "label": "range(2, 5)", "iteration": 0, "total": 3, "position": 0},
+            {"action": "scan", "activeLine": 2, "label": "сектор 2", "iteration": 1, "total": 3, "position": 0},
+            {"action": "scan", "activeLine": 2, "label": "сектор 3", "iteration": 2, "total": 3, "position": 0},
+            {"action": "scan", "activeLine": 2, "label": "сектор 4", "iteration": 3, "total": 3, "position": 0}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson-6",
+      "order": 6,
+      "moduleId": "loops",
+      "moduleLessonOrder": 2,
+      "title": "Пока условие истинно",
+      "eyebrow": "Цикл while",
+      "location": "Палуба 04 · Шлюз",
+      "missionBrief": "Шлюз закрывается постепенно. Научи Byte повторять проверку, пока давление не станет безопасным.",
+      "concept": "while повторяет блок, пока условие остаётся истинным. Он удобен, когда заранее неизвестно точное число повторов.",
+      "analogy": "Ты наливаешь воду, пока стакан не заполнится. Сколько секунд это займёт — неизвестно, поэтому важнее условие «пока не полный», а не точное число повторов.",
+      "whyItMatters": "while нужен для ожидания события, игровых раундов, повторных попыток и процессов, которые заканчиваются по состоянию, а не по счётчику.",
+      "whereUsed": ["таймеры", "игровой цикл", "повторный ввод"],
+      "practiceGoal": "Увидеть, как условие меняется внутри while, и не допустить бесконечного цикла.",
+      "ruleOfThumb": "В while заранее найди строку, которая приближает условие к False; без неё цикл может не завершиться.",
+      "deepDive": [
+        "Условие while проверяется перед каждой новой итерацией.",
+        "Если условие сразу False, тело цикла не выполнится ни разу.",
+        "Счётчик, заряд или расстояние должны изменяться внутри цикла."
+      ],
+      "selfCheckQuestion": "count = 0 и while count > 0. Сколько раз выполнится тело цикла?",
+      "selfCheckAnswer": "Ни одного: условие ложно уже при первой проверке.",
+      "steps": [
+        "Перед повтором Python проверяет условие после while.",
+        "Если условие истинно, выполняется весь блок с отступом.",
+        "Внутри блока состояние должно меняться, иначе цикл может не закончиться."
+      ],
+      "commonMistake": "Если переменная в условии никогда не меняется, while будет работать бесконечно. Всегда найди строку, которая приближает цикл к остановке.",
+      "explanation": "pressure уменьшается после каждой проверки. Когда значение станет 0, условие pressure > 0 окажется ложным и цикл завершится.",
+      "code": ["pressure = 3", "while pressure > 0:", "    release_air()", "    pressure -= 1"],
+      "exercises": [
+        {
+          "id": "prediction-while-countdown",
+          "lessonId": "lesson-6",
+          "order": 1,
+          "title": "Обратный отсчёт",
+          "type": "prediction",
+          "missionBrief": "Перед стартом маяк должен мигнуть три раза. Просчитай цикл до запуска.",
+          "systemLabel": "Стартовый маяк",
+          "successMessage": "Отсчёт завершён: три сигнала и запуск.",
+          "prompt": "Сколько раз выполнится blink()?",
+          "code": ["count = 3", "while count > 0:", "    blink()", "    count -= 1"],
+          "options": ["3 раза", "2 раза", "Бесконечно"],
+          "correctAnswer": ["3 раза"],
+          "hints": ["Сначала count равно 3.", "После каждого сигнала count уменьшается на 1.", "Цикл работает для 3, 2 и 1 — всего три раза."],
+          "explanation": "Значения count перед повтором: 3, 2, 1. При 0 условие становится ложным.",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "loopStart", "activeLine": 2, "label": "count > 0", "iteration": 0, "total": 3, "position": 0},
+            {"action": "blink", "activeLine": 3, "label": "итерация 1 / 3 · blink()", "iteration": 1, "total": 3, "position": 0},
+            {"action": "blink", "activeLine": 3, "label": "итерация 2 / 3 · blink()", "iteration": 2, "total": 3, "position": 0},
+            {"action": "blink", "activeLine": 3, "label": "итерация 3 / 3 · blink()", "iteration": 3, "total": 3, "position": 0}
+          ]
+        },
+        {
+          "id": "bug-infinite-while",
+          "lessonId": "lesson-6",
+          "order": 2,
+          "title": "Зацикленный шлюз",
+          "type": "bugHunt",
+          "missionBrief": "Шлюз продолжает выпускать воздух и не останавливается. Найди причину бесконечного цикла.",
+          "systemLabel": "Контроль давления",
+          "successMessage": "Счётчик снова меняется, шлюз остановится вовремя.",
+          "prompt": "Нажми строку, которую нужно исправить, чтобы pressure уменьшался.",
+      "code": ["pressure = 3", "while pressure > 0:", "    release_air()", "    pressure += 0"],
+      "resolvedCode": ["pressure = 3", "while pressure > 0:", "    release_air()", "    pressure -= 1"],
+          "options": [],
+          "correctAnswer": ["4"],
+          "hints": ["Проверь, меняется ли pressure.", "Прибавление нуля оставляет число прежним.", "Ошибка в строке 4: нужно pressure -= 1."],
+          "explanation": "pressure += 0 не меняет значение, поэтому условие всегда True. Уменьшение на 1 завершит цикл.",
+          "xpReward": 30,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "3 > 0 → True", "position": 0},
+            {"action": "releaseAir", "activeLine": 3, "label": "выполняется release_air()", "iteration": 1, "total": 3, "position": 0},
+            {"action": "checkCondition", "activeLine": 4, "label": "pressure: 3 → 2", "iteration": 1, "total": 3, "position": 0}
+          ]
+        },
+        {
+          "id": "reorder-while",
+          "lessonId": "lesson-6",
+          "order": 3,
+          "title": "Собери безопасный цикл",
+          "type": "reorder",
+          "missionBrief": "Система шлюза потеряла порядок команд. Сначала задай давление, затем проверяй и уменьшай его.",
+          "systemLabel": "Сценарий шлюза",
+          "successMessage": "Порядок восстановлен. Цикл имеет понятное условие остановки.",
+          "prompt": "Расположи строки в рабочем порядке.",
+          "code": ["pressure = 3", "while pressure > 0:", "    release_air()", "    pressure -= 1"],
+          "options": ["pressure -= 1", "while pressure > 0:", "pressure = 3", "release_air()"],
+          "correctAnswer": ["pressure = 3", "while pressure > 0:", "release_air()", "pressure -= 1"],
+          "hints": ["Сначала переменной нужно начальное значение.", "После этого идёт условие while.", "Внутри цикла выпусти воздух и уменьши pressure."],
+          "explanation": "Начальное значение идёт до while, а действие и изменение pressure — внутри цикла.",
+          "xpReward": 30,
+          "simulation": [
+            {"action": "loopStart", "activeLine": 2, "label": "3 > 0 → True", "iteration": 0, "total": 3, "position": 0},
+            {"action": "releaseAir", "activeLine": 3, "label": "выполняется release_air()", "iteration": 1, "total": 3, "position": 0},
+            {"action": "checkCondition", "activeLine": 4, "label": "pressure: 3 → 2", "iteration": 1, "total": 3, "position": 0}
+          ]
+        },
+        {
+          "id": "prediction-while-zero",
+          "lessonId": "lesson-6",
+          "order": 4,
+          "title": "Ноль повторов",
+          "type": "prediction",
+          "missionBrief": "Давление уже безопасно. Проверь, будет ли система зря выпускать воздух перед блокировкой шлюза.",
+          "systemLabel": "Безопасный шлюз",
+          "successMessage": "Лишних повторов нет. Шлюз сразу заблокирован.",
+          "prompt": "Сколько раз выполнится release_air() при pressure = 0?",
+          "code": ["pressure = 0", "while pressure > 0:", "    release_air()", "    pressure -= 1", "lock()"],
+          "options": ["0 раз", "1 раз", "Бесконечно"],
+          "correctAnswer": ["0 раз"],
+          "hints": ["while проверяет условие до выполнения тела.", "0 > 0 даёт False.", "При первой ложной проверке тело цикла пропускается."],
+          "explanation": "Условие ложно сразу, поэтому тело while не выполнится ни разу, а затем сработает lock().",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "0 > 0 → False", "position": 0},
+            {"action": "lock", "activeLine": 5, "label": "выполняется lock()", "position": 0}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson-7",
+      "order": 7,
+      "moduleId": "loops",
+      "moduleLessonOrder": 3,
+      "title": "Остановить или пропустить",
+      "eyebrow": "break и continue",
+      "location": "Палуба 05 · Склад данных",
+      "missionBrief": "Byte перебирает повреждённые контейнеры. Научи его пропускать пустые и прекращать поиск, когда найден аварийный модуль.",
+      "concept": "break немедленно завершает цикл, а continue пропускает остаток текущего повтора и переходит к следующему.",
+      "analogy": "Ищешь нужную книгу на полке: пустое место пропускаешь и продолжаешь, а найдя книгу — прекращаешь поиск. Это continue и break.",
+      "whyItMatters": "Управление циклом экономит лишнюю работу и помогает явно описать исключения: что игнорировать и когда цель уже достигнута.",
+      "whereUsed": ["поиск", "фильтрация", "проверка данных"],
+      "practiceGoal": "Различать break и continue и считать, какие команды действительно выполнятся.",
+      "ruleOfThumb": "break завершает весь ближайший цикл, continue пропускает остаток только текущей итерации.",
+      "deepDive": [
+        "После break выполнение продолжается с первой строкой после цикла.",
+        "После continue цикл переходит к следующему значению и снова проверяет условие.",
+        "Команды ниже continue в текущей итерации уже не выполняются."
+      ],
+      "selfCheckQuestion": "Что произойдёт с командами ниже continue в той же итерации?",
+      "selfCheckAnswer": "Они будут пропущены, а цикл начнёт следующую итерацию.",
+      "steps": [
+        "Цикл получает очередной элемент.",
+        "continue сразу переходит к следующему элементу.",
+        "break выходит из цикла целиком; код после цикла продолжает работу."
+      ],
+      "commonMistake": "break не пропускает один элемент — он завершает весь цикл. Для пропуска одного повтора нужен continue.",
+      "explanation": "Пустые контейнеры пропускаются через continue, а аварийный модуль завершает поиск через break.",
+      "code": ["for box in boxes:", "    if box == 'empty':", "        continue", "    if box == 'core':", "        break", "    scan(box)"],
+      "exercises": [
+        {
+          "id": "prediction-break-search",
+          "lessonId": "lesson-7",
+          "order": 1,
+          "title": "Цель найдена",
+          "type": "prediction",
+          "missionBrief": "Сканер дошёл до ядра. Реши, будет ли он проверять оставшиеся контейнеры.",
+          "systemLabel": "Поисковый сканер",
+          "successMessage": "Поиск остановлен сразу после обнаружения ядра.",
+          "prompt": "Что произойдёт, когда item == 'core'?",
+          "code": ["for item in cargo:", "    if item == 'core':", "        break", "    scan(item)"],
+          "options": ["Цикл завершится", "Пропустится только core", "scan(core) выполнится"],
+          "correctAnswer": ["Цикл завершится"],
+          "hints": ["Посмотри на команду в истинной ветке.", "break означает выход из ближайшего цикла.", "После break оставшиеся элементы не проверяются."],
+          "explanation": "break завершает for целиком, поэтому scan(core) и следующие итерации не выполняются.",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "item == core → True", "position": 2},
+            {"action": "stop", "activeLine": 3, "label": "break: цикл завершён", "iteration": 2, "total": 4, "position": 2}
+          ]
+        },
+        {
+          "id": "prediction-continue-empty",
+          "lessonId": "lesson-7",
+          "order": 2,
+          "title": "Пустой контейнер",
+          "type": "prediction",
+          "missionBrief": "В списке попался пустой контейнер. Выясни, будет ли он отправлен на сканирование.",
+          "systemLabel": "Фильтр груза",
+          "successMessage": "Пустой контейнер пропущен, проверка продолжается.",
+          "prompt": "Что сделает continue для значения 'empty'?",
+          "code": ["for box in boxes:", "    if box == 'empty':", "        continue", "    scan(box)"],
+          "options": ["Пропустит scan(box)", "Завершит весь цикл", "Просканирует empty"],
+          "correctAnswer": ["Пропустит scan(box)"],
+          "hints": ["continue относится только к текущей итерации.", "После него выполнение прыгает к следующему box.", "Строка scan(box) для empty не выполнится."],
+          "explanation": "continue пропускает остаток текущей итерации, но цикл продолжает работу со следующим контейнером.",
+          "xpReward": 25,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "box == empty → True", "position": 1},
+            {"action": "skip", "activeLine": 3, "label": "continue: позиция прежняя, перейти к следующему box", "iteration": 2, "total": 4, "position": 1}
+          ]
+        },
+        {
+          "id": "bug-wrong-loop-control",
+          "lessonId": "lesson-7",
+          "order": 3,
+          "title": "Поиск оборвался",
+          "type": "bugHunt",
+          "missionBrief": "Сканер встретил пустой контейнер и завершил всю проверку. Найди неверную команду.",
+          "systemLabel": "Журнал сканирования",
+          "successMessage": "Теперь пустые контейнеры пропускаются, а поиск продолжается.",
+          "prompt": "Нажми строку, где break нужно заменить на continue.",
+          "code": ["for box in boxes:", "    if box == 'empty':", "        break", "    scan(box)"],
+          "resolvedCode": ["for box in boxes:", "    if box == 'empty':", "        continue", "    scan(box)"],
+          "options": [],
+          "correctAnswer": ["3"],
+          "hints": ["Нужно пропустить только один пустой box.", "break останавливает весь for.", "Ошибка в строке 3: здесь нужен continue."],
+          "explanation": "break слишком рано завершает поиск. continue пропустит пустой контейнер и сохранит остальные итерации.",
+          "xpReward": 30,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "пустой контейнер", "position": 1},
+            {"action": "skip", "activeLine": 3, "label": "continue: позиция прежняя, искать дальше", "iteration": 2, "total": 4, "position": 1}
+          ]
+        },
+        {
+          "id": "prediction-continue-flow",
+          "lessonId": "lesson-7",
+          "order": 4,
+          "title": "Что останется после continue",
+          "type": "prediction",
+          "missionBrief": "В списке есть пустой и рабочий контейнер. Проследи, какие значения реально попадут в сканер.",
+          "systemLabel": "Фильтр контейнеров",
+          "successMessage": "Пустой контейнер пропущен, рабочий успешно просканирован.",
+          "prompt": "Какая команда выполнится для значения 'empty'?",
+          "code": ["for box in ['empty', 'data']:", "    if box == 'empty':", "        continue", "    scan(box)"],
+          "options": ["Только continue", "continue и scan(box)", "break"],
+          "correctAnswer": ["Только continue"],
+          "hints": ["Условие для empty истинно.", "continue завершает текущую итерацию.", "Строка scan(box) ниже continue для empty пропускается."],
+          "explanation": "Для empty выполняется continue, поэтому scan(box) в этой итерации не запускается. На следующей итерации сканируется data.",
+          "xpReward": 30,
+          "simulation": [
+            {"action": "checkCondition", "activeLine": 2, "label": "box == empty → True", "iteration": 1, "total": 2, "position": 0},
+            {"action": "skip", "activeLine": 3, "label": "continue: scan пропущен", "iteration": 1, "total": 2, "position": 0},
+            {"action": "scan", "activeLine": 4, "label": "следующий box: scan(data)", "iteration": 2, "total": 2, "position": 0}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson-8",
+      "order": 8,
+      "moduleId": "loops",
+      "moduleLessonOrder": 4,
+      "title": "Автопилот",
+      "eyebrow": "Цикл + условие",
+      "location": "Внешний контур · Поле обломков",
+      "missionBrief": "До ядра остался один коридор, но обломки постоянно меняют положение. Объедини цикл и условие в автопилот, который решает заново на каждом шаге.",
+      "concept": "Условие можно поместить внутрь цикла. Тогда на каждом повторе программа заново смотрит на ситуацию и выбирает подходящее действие.",
+      "analogy": "Так работает робот-пылесос: снова и снова едет вперёд, проверяет датчик и поворачивает только перед препятствием. Один цикл отвечает за повтор, условие — за решение внутри каждого повтора.",
+      "whyItMatters": "Большинство полезных программ не только повторяют действия, но и принимают решения внутри каждого повтора: игры, роботы, обработка заказов и уведомлений.",
+      "whereUsed": ["автопилот", "боты", "обработка списков"],
+      "practiceGoal": "Соединить цикл и условие в один алгоритм и проследить решение на каждой итерации.",
+      "ruleOfThumb": "Разбирай вложенный алгоритм по одной итерации: значение цикла → проверка if → выбранное действие.",
+      "deepDive": [
+        "Условие внутри цикла вычисляется заново на каждой итерации.",
+        "Одна и та же программа может выбрать разные ветки для разных значений.",
+        "Для трассировки записывай номер итерации, значения переменных и выполненную строку."
+      ],
+      "selfCheckQuestion": "Цикл идёт по трём клеткам, препятствие только во второй. Сколько раз проверится if?",
+      "selfCheckAnswer": "Три раза — по одному разу на каждой итерации, даже если ветка с поворотом нужна только один раз.",
+      "steps": [
+        "Цикл начинает очередной шаг маршрута.",
+        "Датчик проверяет, есть ли впереди препятствие.",
+        "При True Byte поворачивает, при False движется вперёд, затем начинается новый повтор."
+      ],
+      "commonMistake": "Условие проверяется на каждой итерации заново. Результат первой проверки не сохраняется навсегда: на следующем шаге препятствие может появиться или исчезнуть.",
+      "explanation": "Цикл повторяет маршрут, а if / else каждый раз выбирает безопасное действие.",
+      "code": ["for step in range(4):", "    if obstacle:", "        turn()", "    else:", "        move()"],
+      "exercises": [
+        {
+          "id": "prediction-autopilot",
+          "lessonId": "lesson-8",
+          "order": 1,
+          "title": "Препятствие впереди",
+          "type": "prediction",
+          "missionBrief": "На втором такте перед дроном появляется обломок панели. Предскажи реакцию автопилота до столкновения.",
+          "systemLabel": "Сканер препятствий",
+          "successMessage": "Манёвр рассчитан: дрон отвернул от обломка и сохранил маршрут.",
+          "prompt": "На второй итерации датчик видит препятствие. Что сделает Byte?",
+          "code": ["for step in range(4):", "    if obstacle:", "        turn()", "    else:", "        move()"],
+          "options": ["Повернёт", "Пойдёт вперёд", "Завершит программу"],
+          "correctAnswer": ["Повернёт"],
+          "hints": ["Смотри на условие obstacle.", "На второй итерации obstacle равно True.", "При True выполняется turn()."],
+          "explanation": "Условие истинно, поэтому Byte выполняет turn() и продолжает цикл.",
+          "xpReward": 30,
+          "simulation": [
+            {"action": "loopIteration", "activeLine": 1, "label": "2 / 4", "iteration": 2, "total": 4, "position": 1},
+            {"action": "checkCondition", "activeLine": 2, "label": "obstacle → True", "iteration": 2, "total": 4, "position": 1},
+            {"action": "turn", "activeLine": 3, "label": "выполняется turn() на месте", "iteration": 2, "total": 4, "position": 1}
+          ]
+        },
+        {
+          "id": "reorder-autopilot",
+          "lessonId": "lesson-8",
+          "order": 2,
+          "title": "Собери автопилот",
+          "type": "reorder",
+          "missionBrief": "Навигационный модуль стёр порядок команд. Восстанови иерархию: повтор, проверка, манёвр, движение.",
+          "systemLabel": "Навигационное ядро",
+          "successMessage": "Автопилот собран и проходит повторную диагностику.",
+          "prompt": "Расположи блоки от общего повтора к решению и действию.",
+          "code": ["for step in range(4):", "    if obstacle:", "        turn()", "    else:", "        move()"],
+          "options": ["move()", "if obstacle:", "turn()", "for step in range(4):"],
+          "correctAnswer": ["for step in range(4):", "if obstacle:", "turn()", "move()"],
+          "hints": ["Самый внешний блок — цикл.", "Внутри цикла сначала нужна проверка.", "После проверки расположи turn(), затем move()."],
+          "explanation": "Цикл окружает весь маршрут, условие выбирает ветку, а команды выполняют действие.",
+          "xpReward": 30,
+          "simulation": [
+            {"action": "loopStart", "activeLine": 1, "label": "автопилот запущен", "iteration": 0, "total": 4, "position": 0},
+            {"action": "checkCondition", "activeLine": 2, "label": "проверка препятствия", "iteration": 1, "total": 4, "position": 0},
+            {"action": "move", "activeLine": 5, "label": "путь свободен", "iteration": 1, "total": 4, "position": 1}
+          ]
+        },
+        {
+          "id": "prediction-safe-route",
+          "lessonId": "lesson-8",
+          "order": 3,
+          "title": "Свободный маршрут",
+          "type": "prediction",
+          "missionBrief": "Последний сектор выглядит пустым. Проверь, что ложный сигнал obstacle приведёт к движению, а не к лишнему повороту.",
+          "systemLabel": "Финальный коридор",
+          "successMessage": "Путь свободен. Byte вышел к энергетическому ядру.",
+          "prompt": "Датчик сообщает False: препятствия нет. Какая команда выполнится?",
+          "code": ["for step in range(4):", "    if obstacle:", "        turn()", "    else:", "        move()"],
+          "options": ["Пойдёт вперёд", "Повернёт", "Остановится"],
+          "correctAnswer": ["Пойдёт вперёд"],
+          "hints": ["False означает, что блок if пропускается.", "После ложного условия программа ищет else.", "Внутри else находится move()."],
+          "explanation": "obstacle равно False, поэтому выполняется ветка else с командой move().",
+          "xpReward": 30,
+          "simulation": [
+            {"action": "loopIteration", "activeLine": 1, "label": "3 / 4", "iteration": 3, "total": 4, "position": 2},
+            {"action": "checkCondition", "activeLine": 2, "label": "obstacle → False", "iteration": 3, "total": 4, "position": 2},
+            {"action": "checkCondition", "activeLine": 4, "label": "выбрана ветка else", "iteration": 3, "total": 4, "position": 2},
+            {"action": "move", "activeLine": 5, "label": "выполняется move()", "iteration": 3, "total": 4, "position": 3}
+          ]
+        },
+        {
+          "id": "prediction-mixed-route",
+          "lessonId": "lesson-8",
+          "order": 4,
+          "title": "Смешанный маршрут",
+          "type": "prediction",
+          "missionBrief": "На трёх клетках датчик увидит свободный путь, препятствие и снова свободный путь. Посчитай реальные движения Byte.",
+          "systemLabel": "Поле обломков",
+          "successMessage": "Трассировка завершена: Byte дважды продвинулся и один раз повернул.",
+          "prompt": "Сколько раз выполнится move() для [False, True, False]?",
+          "code": ["for obstacle in [False, True, False]:", "    if obstacle:", "        turn()", "    else:", "        move()"],
+          "options": ["2 раза", "1 раз", "3 раза"],
+          "correctAnswer": ["2 раза"],
+          "hints": ["Разбери список по одному значению.", "При True выполняется turn(), при False — move().", "В списке два значения False."],
+          "explanation": "Первое и третье значения False выбирают move(), второе True выбирает turn(). Итого два движения.",
+          "xpReward": 35,
+          "simulation": [
+            {"action": "loopIteration", "activeLine": 1, "label": "1 / 3", "iteration": 1, "total": 3, "position": 0},
+            {"action": "checkCondition", "activeLine": 2, "label": "False", "iteration": 1, "total": 3, "position": 0},
+            {"action": "move", "activeLine": 5, "label": "move()", "iteration": 1, "total": 3, "position": 1},
+            {"action": "loopIteration", "activeLine": 1, "label": "2 / 3", "iteration": 2, "total": 3, "position": 1},
+            {"action": "checkCondition", "activeLine": 2, "label": "True", "iteration": 2, "total": 3, "position": 1},
+            {"action": "turn", "activeLine": 3, "label": "turn()", "iteration": 2, "total": 3, "position": 1},
+            {"action": "loopIteration", "activeLine": 1, "label": "3 / 3", "iteration": 3, "total": 3, "position": 1},
+            {"action": "checkCondition", "activeLine": 2, "label": "False", "iteration": 3, "total": 3, "position": 1},
+            {"action": "move", "activeLine": 5, "label": "move()", "iteration": 3, "total": 3, "position": 2}
+          ]
+        }
+      ]
+    }
+  ],
+  "finalMission": {
+    "id": "final-core",
+    "lessonId": "final",
+    "order": 1,
+    "title": "Запрограммируй маршрут",
+    "type": "finalMission",
+    "missionBrief": "Станция держится на аварийном питании. Собери финальный автопилот и проведи Byte через четыре такта к ручному запуску ядра.",
+    "systemLabel": "Энергетическое ядро Helios",
+    "successMessage": "Ядро перезапущено. Свет возвращается во все четыре отсека станции.",
+    "prompt": "Собери автопилот и доведи Byte до энергетического ядра.",
+    "code": ["for step in range(4):", "    if obstacle:", "        turn()", "    else:", "        move()"],
+    "options": ["move()", "else:", "if obstacle:", "turn()", "for step in range(4):"],
+    "correctAnswer": ["for step in range(4):", "if obstacle:", "turn()", "else:", "move()"],
+    "hints": ["Сначала нужен цикл на четыре шага.", "Внутри цикла проверь препятствие.", "После turn() поставь else:, а затем move(): на каждом такте выполняется только одна ветка."],
+    "explanation": "Цикл повторяет проверку, а условие выбирает безопасное действие на каждом шаге.",
+    "xpReward": 100,
+    "simulation": [
+      {"action": "loopStart", "activeLine": 1, "label": "автопилот запущен", "iteration": 0, "total": 4, "position": 0},
+      {"action": "move", "activeLine": 5, "label": "1 / 4 · move()", "iteration": 1, "total": 4, "position": 1},
+      {"action": "checkCondition", "activeLine": 2, "label": "2 / 4 · obstacle → True", "iteration": 2, "total": 4, "position": 1},
+      {"action": "turn", "activeLine": 3, "label": "2 / 4 · turn(): позиция не меняется", "iteration": 2, "total": 4, "position": 1},
+      {"action": "move", "activeLine": 5, "label": "3 / 4 · move()", "iteration": 3, "total": 4, "position": 2},
+      {"action": "move", "activeLine": 5, "label": "4 / 4 · ядро достигнуто", "iteration": 4, "total": 4, "position": 3},
+      {"action": "loopEnd", "activeLine": 1, "label": "миссия выполнена", "iteration": 4, "total": 4, "position": 3}
+    ]
+  }
+}
