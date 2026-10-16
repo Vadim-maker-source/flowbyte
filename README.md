@@ -4,8 +4,6 @@ FLOWBYTE is a local-first Android learning prototype for teenagers. Two modules 
 
 No registration is required. Required lessons, exercises, final mission, XP, Byte levels, replay, and progress persistence work without the backend or AI.
 
-![FLOWBYTE final design board](design/final/flowbyte-screen-board.png)
-
 ## Product flow
 
 Splash → Welcome → two-step onboarding → Mission Map → two modules × four lessons × four exercises → rewards → final mission → certificates → review/replay.
@@ -21,17 +19,23 @@ Exercise formats: prediction, fix-the-logic, drag/reorder blocks with accessible
 
 Selected direction: **Mission Control** — near-black space surfaces, technical grids and route lines, electric cyan actions, mint completion states, clipped corners, compact console hierarchy, and an original code-drawn Byte. See [DESIGN.md](docs/DESIGN.md), the approved [screen-flow reference](design/reference/mission-control-flow.png), and [implementation screenshots](docs/screenshots/).
 
-## Implementation screenshots
+## Скриншоты работающего приложения
 
-| Mission map | Live Trace exercise | Completion |
+Изображения извлечены из презентации проекта. Каждый экран показан целиком, без обрезки и изменения пропорций.
+
+| Карта миссий | Теория урока | Практика: прогноз результата |
 | --- | --- | --- |
-| ![Mission map](docs/screenshots/02-home.png) | ![Exercise](docs/screenshots/04-exercise.png) | ![Completion](docs/screenshots/08-complete.png) |
+| <img src="docs/screenshots/presentation/01-mission-map.jpg" alt="Карта модулей и уроков FLOWBYTE" width="240"> | <img src="docs/screenshots/presentation/02-theory.jpg" alt="Теория Python с объяснением и вопросом к Byte" width="240"> | <img src="docs/screenshots/presentation/03-prediction.jpg" alt="Задание с кодом, роботом Byte и выбором ответа" width="240"> |
 
-| Two-module route | Local profile | Expanded theory | AI tutor |
-| --- | --- | --- | --- |
-| ![Modules](docs/screenshots/10-home-modules.png) | ![Profile](docs/screenshots/11-profile.png) | ![Theory](docs/screenshots/12-theory.png) | ![Assistant](docs/screenshots/13-groq-assistant.png) |
+| Практика: сборка кода | Помощник Byte AI | Диалог с Byte AI |
+| --- | --- | --- |
+| <img src="docs/screenshots/presentation/04-code-order.jpg" alt="Сборка условного оператора из блоков" width="240"> | <img src="docs/screenshots/presentation/05-assistant-welcome.jpg" alt="Начальный экран помощника с контекстом урока" width="240"> | <img src="docs/screenshots/presentation/06-assistant-conversation.jpg" alt="Ответ Byte AI с объяснением и примером Python" width="240"> |
 
-The complete capture set includes onboarding, lesson, wrong-answer feedback, final mission, reward, and the optional assistant in `docs/screenshots/`.
+| Успешное выполнение и XP | Профиль и сертификаты | Подсказка при ошибке |
+| --- | --- | --- |
+| <img src="docs/screenshots/presentation/07-success.jpg" alt="Награда за выполненное задание и рост опыта" width="240"> | <img src="docs/screenshots/presentation/08-profile.jpg" alt="Профиль ученика с прогрессом и сертификатом модуля" width="240"> | <img src="docs/screenshots/presentation/09-error-hint.jpg" alt="Объяснение ошибки и последовательная подсказка" width="240"> |
+
+Оригинальные изображения находятся в [docs/screenshots/presentation](docs/screenshots/presentation/).
 
 ## Stack
 
