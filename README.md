@@ -37,7 +37,7 @@ Selected direction: **Mission Control** — near-black space surfaces, technical
 
 Оригинальные изображения находятся в [docs/screenshots/presentation](docs/screenshots/presentation/).
 
-## Stack
+## Использованные технологии
 
 - Flutter 3.41 / Dart 3.11
 - Riverpod, go_router, SharedPreferences, Dio, Font Awesome
@@ -46,7 +46,20 @@ Selected direction: **Mission Control** — near-black space surfaces, technical
 - Docker Compose
 - Flutter test + pytest
 
-## Run Flutter
+<a id="run-flutter"></a>
+
+## Запуск приложения
+
+Установите Flutter и Android SDK. Подключите Android-устройство с включённой отладкой по USB или запустите эмулятор. Команды ниже выполняются в PowerShell из папки проекта.
+
+Если проект ещё не скачан:
+
+```powershell
+git clone https://github.com/Vadim-maker-source/flowbyte.git
+cd flowbyte
+```
+
+Загрузите зависимости и запустите приложение:
 
 ```powershell
 cd mobile
@@ -54,43 +67,47 @@ flutter pub get
 flutter run
 ```
 
-The assistant API address is never committed to the repository. Pass your deployment URL at build time:
+Для обучения сервер не обязателен: теория, задания, проверка ответов, анимация выполнения кода и сохранение прогресса работают локально.
+
+### Подключение помощника Byte AI
+
+Адрес сервера помощника задаётся при запуске или сборке. Замените `https://api.example.com/api/v1` на адрес своего сервера:
 
 ```powershell
 flutter run --dart-define=FLOWBYTE_API_URL=https://api.example.com/api/v1
 ```
 
-For the current physical-device build on the same Wi-Fi as this workstation:
+### Сборка APK для Android
+
+В папке `mobile` выполните:
 
 ```powershell
 flutter build apk --release --dart-define=FLOWBYTE_API_URL=https://api.example.com/api/v1
 ```
 
-The course, answer checking, Live Trace, progress, and progressive hints remain fully local; this URL is used only by the optional helper API.
+Готовый APK появится в `mobile/build/app/outputs/flutter-apk/app-release.apk`, если отсчитывать путь от корня проекта. Указанный адрес API нужен только помощнику Byte AI.
 
-## Run backend and PostgreSQL
+## Запуск сервера и PostgreSQL
 
-Copy `.env.example` to the ignored root `.env`, set `POSTGRES_PASSWORD` and
-paste your private `GIGACHAT_AUTH_KEY` (the Authorization Key from GigaChat
-Studio, without `Basic `). GigaChat is now the **only** AI provider; OAuth and
-chat-completion requests happen entirely on the FastAPI backend. No credential
-is stored in Flutter or the APK.
+Установите и запустите Docker с поддержкой Docker Compose. Из корня проекта скопируйте `.env.example` в `.env`. Укажите пароль базы в `POSTGRES_PASSWORD` и свой ключ GigaChat в `GIGACHAT_AUTH_KEY` — это Authorization Key из GigaChat Studio без префикса `Basic `.
+
+GigaChat — единственный подключённый ИИ-провайдер. Авторизация и запросы к модели выполняются на сервере FastAPI. Файл `.env` исключён из Git, ключи не входят в приложение и APK.
 
 ```powershell
 Copy-Item .env.example .env
-# Open .env and set POSTGRES_PASSWORD and GIGACHAT_AUTH_KEY
+# Откройте .env и задайте POSTGRES_PASSWORD и GIGACHAT_AUTH_KEY
 
 docker compose up -d --build
 Invoke-RestMethod http://localhost:2345/api/v1/health
 ```
 
-The default model is `GigaChat-2-Pro`. Tokens are cached and
-refreshed automatically. Errors cause the assistant to display its existing
-offline message without interrupting lessons, answer checking or local hints.
-If TLS validation fails, follow [GigaChat setup instructions](docs/AI_USAGE.md)
-to install trusted certificates or configure `GIGACHAT_CA_BUNDLE`.
+По умолчанию используется модель `GigaChat-2-Pro`. Сервер сохраняет токен доступа и автоматически обновляет его. Если помощник недоступен, приложение сообщает об этом; уроки, проверка ответов и локальные подсказки продолжают работать.
 
-Run FastAPI outside Docker:
+При ошибке проверки TLS-сертификата установите доверенные сертификаты или настройте `GIGACHAT_CA_BUNDLE` по [инструкции подключения GigaChat](docs/AI_USAGE.md).
+
+### Запуск FastAPI без Docker
+
+Команды выполняются из корня проекта. Предварительно настройте подключение к базе и ключ GigaChat в `backend/.env`, используя `backend/.env.example` как образец:
 
 ```powershell
 cd backend
@@ -99,7 +116,9 @@ py -3 -m venv .venv
 .\.venv\Scripts\python -m uvicorn app.main:app --port 2345 --reload
 ```
 
-## Tests
+## Проверка приложения и сервера
+
+Из корня проекта выполните проверки Flutter, затем тесты сервера. Для тестов сервера должно быть создано виртуальное окружение `.venv` и установлены зависимости из `backend/requirements.txt`:
 
 ```powershell
 cd mobile
@@ -111,24 +130,24 @@ cd ..\backend
 .\.venv\Scripts\python -m pytest
 ```
 
-The Flutter suite covers all 32 exercises, two-module parsing, scoring, reorder logic, unlocks, XP/levels, progressive hints, trace order, profile/certificates, constructive error feedback, rewards, and a full route through all eight lessons and the final completion screen. Backend tests cover health, both module catalogs, attempts, validation, progress round-trip, exact AI context, the GigaChat OAuth/chat flow, token caching, and automatic refresh.
+Тесты Flutter проверяют все 32 задания, загрузку двух модулей, оценку ответов, порядок блоков, открытие уроков, XP и уровни, подсказки, последовательность выполнения кода, профиль, сертификаты и полный маршрут обучения. Тесты сервера проверяют доступность API, каталог модулей, попытки и прогресс, контекст диалога, авторизацию GigaChat и обновление токена.
 
-## Offline and AI behavior
+## Работа без интернета и поведение ИИ
 
-`mobile/assets/content/module.json` is the core content source. Progress is written locally first. Network errors never block required learning. The Byte Assistant is optional, server-only, and shows a clear local-hints fallback when unavailable. See [AI_USAGE.md](docs/AI_USAGE.md).
+Учебный материал находится в `mobile/assets/content/module.json`. Прогресс в первую очередь сохраняется на устройстве. Ошибки сети не блокируют обучение. Для Byte AI нужны интернет и настроенный сервер; при его недоступности остаются локальные подсказки. Подробности — в [описании работы ИИ](docs/AI_USAGE.md).
 
-## Project structure
+## Структура проекта
 
 ```text
-mobile/                   Flutter app and tests
-backend/                  FastAPI, SQLAlchemy, pytest, Dockerfile
-design/                   context and frozen visual boards
-docs/                     design, API, architecture, AI usage, screenshots
-docker-compose.yml        PostgreSQL + API
+mobile/                   Приложение Flutter и тесты
+backend/                  Сервер FastAPI, SQLAlchemy, pytest, Dockerfile
+design/                   Материалы и макеты дизайна
+docs/                     Дизайн, API, архитектура, ИИ и скриншоты
+docker-compose.yml        Запуск PostgreSQL и API
 ```
 
-## Known limitations
+## Известные ограничения
 
-- The AI tutor requires a configured GigaChat authorization key on the backend; no provider key is included in the APK.
-- Device-specific haptic feel and high-refresh performance still need final verification on physical Android hardware.
-- The included SQL file is the initial schema; production migration lifecycle tooling is outside this prototype scope.
+- Для помощника нужен ключ GigaChat в настройках сервера. В APK ключа нет.
+- Виброотклик и плавность на экранах с высокой частотой обновления требуют дополнительной проверки на физических Android-устройствах.
+- SQL-файл содержит начальную схему базы. Отдельная система миграций для промышленной эксплуатации в прототип не входит.
