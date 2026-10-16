@@ -1,23 +1,31 @@
 # FLOWBYTE
 
-FLOWBYTE is a local-first Android learning prototype for teenagers. Two modules contain eight plain-language lessons and 32 practical tasks on Python conditions and loops. The signature Live Trace highlights each executed line and moves Byte only when the executed code contains a movement command.
+**Команда «Двойной прыжок»** — Вадим Буреев и Григорий Батищев. Наставник: Марасанова Елена Вячеславовна.
 
-No registration is required. Required lessons, exercises, final mission, XP, Byte levels, replay, and progress persistence work without the backend or AI.
+FLOWBYTE — учебное приложение для Android, которое знакомит подростков 12–17 лет с условиями и циклами Python. В двух модулях собраны восемь уроков с понятной теорией и 32 практических задания. Пошаговая подсветка показывает текущую строку кода, а робот Byte двигается только тогда, когда выполняемая команда задаёт движение.
 
-## Product flow
+Регистрация не нужна. Теория, задания, итоговая миссия, XP, уровни Byte, повторение и сохранение прогресса работают на устройстве без сервера и ИИ.
 
-Splash → Welcome → two-step onboarding → Mission Map → two modules × four lessons × four exercises → rewards → final mission → certificates → review/replay.
+## Скачать приложение
 
-- **Module 1 — Conditions:** `if`, `else`, comparisons, `elif`, `and`, `or`, `not`.
-- **Module 2 — Loops:** `for`, `range`, `while`, infinite-loop safety, `break`, `continue`, and a combined autopilot.
+[Скачать релизный APK FLOWBYTE v1.0.0](https://github.com/Vadim-maker-source/flowbyte/releases/download/v1.0.0/FLOWBYTE-v1.0.0.apk)
 
-Every lesson answers “what is it?”, “why is it useful?”, “where is it used?” and “what can go wrong?”, adds a rule of thumb, a three-point deep dive, and an interactive self-check before practice. The profile shows local XP, lessons and practices. Each finished module opens a named in-app certificate; it is explicitly presented as a game completion reward, not an official education credential.
+Откройте скачанный файл на Android-устройстве и подтвердите установку. Если система запросит разрешение на установку из браузера или файлового менеджера, разрешите его для установки APK. Сведения о версии и файл сборки доступны в [GitHub Releases](https://github.com/Vadim-maker-source/flowbyte/releases/latest).
 
-Exercise formats: prediction, fix-the-logic, drag/reorder blocks with accessible up/down controls, and the final combined mission. Incorrect answers keep the execution context visible and offer retry plus three progressive hints.
+## Путь пользователя
 
-## Design
+Приветствие и знакомство с Byte, затем карта миссий. Ученик проходит два модуля: в каждом четыре урока по четыре задания. За правильные решения получает награды, выполняет итоговую миссию и открывает сертификаты. Пройденные темы можно повторять.
 
-Selected direction: **Mission Control** — near-black space surfaces, technical grids and route lines, electric cyan actions, mint completion states, clipped corners, compact console hierarchy, and an original code-drawn Byte. See [DESIGN.md](docs/DESIGN.md), the approved [screen-flow reference](design/reference/mission-control-flow.png), and [implementation screenshots](docs/screenshots/).
+- **Модуль 1. Условия:** `if`, `else`, сравнения, `elif`, `and`, `or`, `not`.
+- **Модуль 2. Циклы:** `for`, `range`, `while`, защита от бесконечных повторений, `break`, `continue` и комбинированный автопилот.
+
+Каждый урок объясняет, что делает конструкция, зачем она нужна, где применяется и какие ошибки возможны. Перед практикой ученик проверяет понимание на небольшом примере. В профиле видны XP, пройденные уроки и задания. За завершённый модуль выдаётся именной игровой сертификат внутри приложения; он не является документом об образовании.
+
+Форматы практики: прогноз результата кода, поиск ошибки, сборка программы из блоков и итоговая миссия. Блоки можно переставлять перетаскиванием или кнопками вверх и вниз. При неверном ответе остаётся виден контекст выполнения, доступны повторная попытка и три последовательные подсказки.
+
+## Дизайн
+
+Интерфейс выполнен в стиле космического центра управления: тёмный фон, техническая сетка, голубые кнопки, мятные отметки выполнения и робот Byte. Описание решений находится в [документе о дизайне](docs/DESIGN.md), [референс экранов](design/reference/mission-control-flow.png) и [скриншоты приложения](docs/screenshots/).
 
 ## Скриншоты работающего приложения
 
@@ -41,10 +49,10 @@ Selected direction: **Mission Control** — near-black space surfaces, technical
 
 - Flutter 3.41 / Dart 3.11
 - Riverpod, go_router, SharedPreferences, Dio, Font Awesome
-- FastAPI, Pydantic, async SQLAlchemy
+- FastAPI, Pydantic, асинхронная работа с SQLAlchemy
 - PostgreSQL 17
 - Docker Compose
-- Flutter test + pytest
+- Тестирование: flutter test и pytest
 
 <a id="run-flutter"></a>
 
@@ -151,3 +159,7 @@ docker-compose.yml        Запуск PostgreSQL и API
 - Для помощника нужен ключ GigaChat в настройках сервера. В APK ключа нет.
 - Виброотклик и плавность на экранах с высокой частотой обновления требуют дополнительной проверки на физических Android-устройствах.
 - SQL-файл содержит начальную схему базы. Отдельная система миграций для промышленной эксплуатации в прототип не входит.
+
+## Видео и презентация
+
+[Открыть папку Google Диска с видео и презентацией](https://drive.google.com/drive/folders/1atvSz_KDlO7AyNAXp6Ir-SzBhYzuNpi3?usp=drive_link)
